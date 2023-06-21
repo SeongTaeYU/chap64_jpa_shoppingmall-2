@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout/layout2}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout2}">
     <div layout:fragment="content" class="container my-3">
         <h1 class="mt-4">orderMaster Details</h1>
         
@@ -19,7 +19,7 @@
                 </tr>
                 <tr>
                     <th>주문 총금액:</th>
-                    <td th:text="${orderMaster.totalAmt}"></td>
+                    <td data-th-text="${#numbers.formatInteger(orderMaster.totalAmt,3, 'COMMA') +'원'}"></td>
                 </tr>
                 <tr>
                     <th>주문일:</th>
@@ -31,13 +31,12 @@
         <a th:href="@{/order/list}">
             <button type="button" class="btn btn-outline-primary">Back to List</button>
         </a>
-        <a th:href="@{/order/modify(orderId = ${orderMaster.orderId})}">
+        <a th:href="@{/order/modify(orderId=${orderMaster.orderId})}">
             <button type="button" class="btn btn-outline-success">Modify</button>
         </a>       
-		<a th:href="@{/order/delete/{orderId}(orderId=${orderMaster.orderId})}">
+		<a th:href="@{/order/delete/(orderId=${orderMaster.orderId})}">
 		    <button type="button" class="btn btn-outline-warning">Delete</button>
 		</a>
-    
         
     </div>
 </html>

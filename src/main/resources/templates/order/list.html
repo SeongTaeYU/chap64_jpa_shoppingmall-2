@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout/layout2}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout2}">
     <div layout:fragment="content" class="container my-3">
 	<h1 class="mt-4">Order List Page
 		<span>
@@ -10,7 +10,7 @@
 		</span>
 	</h1>
 
-        <form action="/order/list" method="get" id="searchForm">
+        <form action="/board/list" method="get" id="searchForm">
             <div class="input-group">
                 <input type="hidden" name="page" value = "1">
                 <div class="input-group-prepend">
@@ -36,7 +36,7 @@
             <thead>
                 <tr>
                     <th scope="col">Order ID</th>
-                    <th scope="col">Member Email</th>
+                    <th scope="col">Email</th>
                     <th scope="col">Address</th>
                     <th scope="col">Total Amount</th>
                     <th scope="col">Registration Date</th>
@@ -53,8 +53,8 @@
 	                        [[${order.email}]]
 	                    </a>
                 	</th>
-			        <td th:text="${order.address}"></td>
-		        	<td th:text="${order.totalAmt}"></td>			        
+                	<td th:text="${order.address}"></td>
+                	<td data-th-text="${#numbers.formatInteger(order.totalAmt,3,'COMMA') +'원'}"></td>
 			        <td th:text="${#temporals.format(order.regDate, 'yyyy/MM/dd')}"></td>
 			    </tr>
 			</tbody>            

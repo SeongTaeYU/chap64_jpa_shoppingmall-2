@@ -19,13 +19,13 @@ public interface OrderItemService {
 		// 화면에서 전달된 categoryId로 카테고리 객체 생성
 		Product product = Product.builder()
 						.productId(orderItemDTO.getProductId())
-						.price(orderItemDTO.getPrice())
 						.build();
 
     	return OrderItem.builder()
     			.orderItemId(orderItemDTO.getOrderItemId())
     			.product(product)
     			.quantity(orderItemDTO.getQuantity())
+    			.totalAmt(orderItemDTO.getTotalAmt())
     			.build();
     }
 
@@ -34,10 +34,8 @@ public interface OrderItemService {
                 .orderItemId(orderItem.getOrderItemId())
                 .productId(orderItem.getProduct().getProductId())
                 .quantity(orderItem.getQuantity())
-                .price(orderItem.getProduct().getPrice())
+                .totalAmt(orderItem.getTotalAmt())
                 .build();
     }
-
-    
 }
 

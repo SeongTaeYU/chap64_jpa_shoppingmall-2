@@ -1,16 +1,21 @@
-<html layout:decorate="~{layout/layout2}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout2}">
     <div layout:fragment="content" class="container my-3">
         <div>
             <form id="memberForm" name="memberForm" action="/member/modify" th:action="@{/member/modify}" method="post">
                 <input type="hidden" id="email" name="email" th:value="${member.email}">
                 <div class="form-group">
-                    <label for="name">회원명</label>
-                    <input type="text" class="form-control" id="name" name="name" th:value="${member.email}" required>
+                    <label for="password">패스워드</label>
+                    <input type="password" class="form-control" id="password" name="password" th:value="${member.password}" required>
+                    <small class="text-danger" th:errors="${memberDTO.password}"></small>
+                </div>
+                <div class="form-group">
+                    <label for="name">이름</label>
+                    <input type="text" class="form-control" id="name" name="name" th:value="${member.name}" required>
                     <small class="text-danger" th:errors="${memberDTO.name}"></small>
                 </div>
                 <div class="form-group">
-                    <label for="description">주소</label>
-                    <input type="text" class="form-control" id="address" name=""address"" th:value="${member.address}">
+                    <label for="address">주소</label>
+                    <input type="text" class="form-control" id="address" name="address" th:value="${member.address}">
                     <small class="text-danger" th:errors="${memberDTO.address}"></small>
                 </div>
                 

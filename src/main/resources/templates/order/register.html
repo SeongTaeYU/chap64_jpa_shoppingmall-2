@@ -1,9 +1,10 @@
-<html layout:decorate="~{layout/layout2}">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout/layout2}">
     <div layout:fragment="content" class="container my-3">
         <div>
             <form id="orderForm" name="orderForm" action="/order/save" th:action="@{/order/register}" method="post">
                 <div class="form-group">
-                    <label for="email">주문자 ID(email)-실제 이메일</label>
+                    <label for="email">주문자 ID(email)</label>
                     <input type="text" class="form-control" id="email" name="email" required>
                     <small class="text-danger" th:errors="${orderMasterDTO.email}"></small>
                 </div>
@@ -14,23 +15,7 @@
                 </div>
                 <h5>주문 상품</h5>
                 <div id="orderItemsContainer">
-                    <div class="order-item">
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="productId">상품선택</label>
-                                <select class="form-control product-select" id="productId" name="productId">
-                                    <option value="">상품을 선택하세요</option>
-                                    <option th:each="product : ${productList}" th:value="${product.productId}" th:text="${product.productName}"></option>
-                                </select>
-                                <small class="text-danger" th:errors="${orderMasterDTO.orderItems[0].productId}"></small>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="quantity">수량</label>
-                                <input type="number" class="form-control" id="quantity" name="quantity" required>
-                                <small class="text-danger" th:errors="${orderMasterDTO.orderItems[0].quantity}"></small>
-                            </div>
-                        </div>
-                    </div>
+                    
                 </div>
                 <button type="button" id="addOrderItemBtn" class="btn btn-primary">상품 추가</button>
                 <button type="submit" class="btn btn-primary">주문하기</button>
@@ -44,8 +29,11 @@
 <script>
     $(document).ready(function() {
         var orderItemIndex = 0;
+        // 최초로 주문 창을 열었을 떄는 상품 선택 창이 1개는 있어야 한다.
+        addProductSelect();
+        populateProductDropdown();
 
-     // 상품 드롭다운리스트 채움
+       // 상품 드롭다운리스트 채움
        function populateProductDropdown() {
             $.ajax({
                 url: '/order/product',
@@ -67,9 +55,42 @@
             });
         }
      
-       //populateProductDropdown();   
+       // populateProductDropdown();   
      
         // 상품 추가 버튼 클릭시 행을 동적으로 추가해줌.
+        $('#addOrderItemBtn').on('click',function() {
+        	addProductSelect();
+        	populateProductDropdown();
+        });
+        
+        // 상품을 선택하는 라인을 생성하는
+        function addProductSelect(){
+        	var orderItemHtml = 
+        		'<div class="order-item">' +
+        			'<div class="form-row">' +
+        				'<div class="form-group col-md-6">' +
+        					'<label for="productId_' + orderItemIndex + '">상품선택</label>' +
+        					'<select class="form-control product-select" id="productId_' + orderItemIndex + '" name="orderItems[' +
+        						orderItemIndex + '].productId">' +
+        						'<option value="">상품을 선택하세요</option>' +
+        						'<option th:each="product : ${productList}" th:value="${product.productId}" th:text="${product.productName}"></option>'+
+        					'</select>' +
+        					'<small class="text-danger" th:errors="${orderMasterDTO.orderItems[' + orderItemIndex + '].productId}"></small>' +
+        					'</div>' +
+        					'<div class="form-group col-md-6">' +
+        						'<label for="quantity_' + orderItemIndex + '">수량</label>' +
+        						'<input type="number" class="form-control" id="quantity_' + orderItemIndex + '" name="orderItems['+
+        							orderItemIndex +'].quantity" required>' +
+        						'<small class="text-danger" th:errors="${orderMasterDTO.orderItems[' + orderItemIndex + '].quantity}"></small>' +
+        					'</div>' +
+        				'</div>' +
+        			'<div>';
+        		$('#orderItemsContainer').append(orderItemHtml);
+        		
+        		orderItemIndex++;
+        }
+        
+        /*
         $('#addOrderItemBtn').on('click', function() {
             orderItemIndex++;
             var orderItemHtml =
@@ -94,7 +115,20 @@
             
             populateProductDropdown();
         });
-
+		*/
+		
+        // submit 눌렀을 떄
+        $('#orderForm').on('submit',function(event){
+        	event.preventDefault();
+        	
+        	let email = $('#email').val();		// email(사용자ID)
+        	let address = $('#address').val();	// 주소
+        	
+        	let orderItems = [];				// 주문 item 상품 담는 배열
+        	let productId;						// 상품id
+        	let quantity;						// 주문 수량
+        
+        /*
         $('#orderForm').on('submit', function(event) {
             event.preventDefault();
 
@@ -104,25 +138,24 @@
             let orderItems = [];	// 주문item 상품 담는 배열
             let productId = $("#productId").val();	// 상품id
             let quantity = $("#quantity").val();	// 주문 수량
-            
+         */  
             // 주문 상품을 담는 배열에 값 세팅
-            orderItems.push({
-            	productId: productId,
-                quantity: quantity
-            })
+ //           orderItems.push({
+ //           	productId: productId,
+ //               quantity: quantity
+ //           })
             
             // 여러행 입력시 사용            
-			/*          
+			var index = 0;
 			$('.order-item').each(function() {
-                var productId = $(this).find('.product-select').val();
-                var quantity = $(this).find('[name^="orderItems"]').val();
-                if (productId && quantity) {
-                    orderItems.push({
-                        productId: productId,
-                        quantity: quantity
-                    });
-                }
-            }); */
+                var productId = $(this).find('#productId_'.concat(index)).val();
+                var quantity = $(this).find('#quantity_'.concat(index)).val();
+               orderItems.push({
+            	   productId: productId,
+            	   quantity: quantity
+               })
+               index++
+            });
 
             // 주문Master를 저장용 자바스크립 객체
             var formData = {

@@ -50,6 +50,5 @@ public class OrderMaster extends BaseEntity {
     private List<OrderItem> orderItems = new ArrayList<>();
     
     // 총 주문금액
-    @Builder.Default
-    private Integer totalAmt = 0;
+    private Integer totalAmt;
 }

@@ -1,6 +1,8 @@
 package com.javalab.product.entity;
 
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -64,5 +66,8 @@ public class Product extends BaseEntity{
     //@Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     //private LocalDateTime regDate = LocalDateTime.now(); // 현재일자
 	
+	// 추가됨.
+    private LocalDateTime regDate= LocalDateTime.now();;
+    private LocalDateTime modDate= LocalDateTime.now();;
 	
 }

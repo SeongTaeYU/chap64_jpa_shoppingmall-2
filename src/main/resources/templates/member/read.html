@@ -1,21 +1,29 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout/layout2}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout2}">
     <div layout:fragment="content" class="container my-3">
-        <h1 class="mt-4">Member Details</h1>
+        <h1 class="mt-4">member Details</h1>
         
         <table class="table">
             <tbody>
                 <tr>
-                    <th>회원 ID (email):</th>
+                    <th>이메일:</th>
                     <td th:text="${member.email}"></td>
                 </tr>
                 <tr>
-                    <th>회원명:</th>
-                    <td th:text="${member.name}"></td>
+                    <th>패스워드:</th>
+                    <td th:text="${member.password}"></td>
+                </tr>
+                <tr>
+                    <th>이름:</th>
+                    <td th:text="${member.Name}"></td>
                 </tr>
                 <tr>
                     <th>주소:</th>
-                    <td th:text="${member.address}"></td>
+                    <td th:text="${member.Address}"></td>
+                </tr>
+                <tr>
+                    <th>멤버 등록일:</th>
+                    <td th:text="${#temporals.format(member.regDate, 'yyyy/MM/dd')}"></td>
                 </tr>
             </tbody>
         </table>
@@ -23,7 +31,7 @@
         <a th:href="@{/member/list}">
             <button type="button" class="btn btn-outline-primary">Back to List</button>
         </a>
-        <a th:href="@{/member/modify(email = ${member.email})}">
+        <a th:href="@{/member/modify(email=${member.email})}">
             <button type="button" class="btn btn-outline-success">Modify</button>
         </a>       
 		<a th:href="@{/member/delete/{email}(email=${member.email})}">

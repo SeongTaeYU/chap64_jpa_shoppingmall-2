@@ -1,37 +1,47 @@
 <html layout:decorate="~{layout/layout2}">
     <div layout:fragment="content" class="container my-3">
         <div>
-            <form id="productForm" name="productForm" action="/product/register" 
-                    th:action="@{/product/register}" 
-                    method="post">
-                <div class="form-group">
-                    <label for="productName">상품명</label>
-                    <input type="text" class="form-control" id="productName" name="productName" 
-                            th:value="${product.productName}" required>
-                    <small class="text-danger" th:errors="${productDTO.productName}"></small>
+            <form id="memberForm" name="memberForm" action="/member/register" 
+            	th:action="@{/member/register}" 
+            	
+            	method="post">
+            	<div class="form-group">
+                    <label for="email">이메일</label>
+                    <input type="text" class="form-control" id="email" name="email" 
+                    					th:value="${member.email}" required>
+                    <small class="text-danger" th:errors="${memberDTO.email}"></small>
+                </div>
+            	<div class="form-group">
+                    <label for="password">패스워드</label>
+                    <input type="text" class="form-control" id="password" name="password" 
+                    					th:value="${member.password}" required>
+                    <small class="text-danger" th:errors="${memberDTO.password}"></small>
                 </div>
                 <div class="form-group">
-                    <label for="description">카테고리 설명</label>
-                    <input type="text" class="form-control" id="description" name="description"
-                            th:value="${product.description}">
-                    <small class="text-danger" th:errors="${productDTO.description}"></small>
+                    <label for="name">이름</label>
+                    <input type="text" class="form-control" id="name" name="name" 
+                    					th:value="${member.name}" required>
+                    <small class="text-danger" th:errors="${memberDTO.name}"></small>
                 </div>
                 <div class="form-group">
-                    <label for="price">가격</label>
-                    <input type="number" class="form-control" id="price" name="price"
-                            th:value="${product.price}" required>
-                    <small class="text-danger" th:errors="${productDTO.price}"></small>
+                    <label for="address">주소</label>
+                    <input type="text" class="form-control" id="address" name="address"
+                    							th:value="${member.address}">
+                    <small class="text-danger" th:errors="${memberDTO.address}"></small>
                 </div>
-                 <div class="form-group">
-                    <label for="categoryId">카테고리</label>
-                    <select class="form-control" id="categoryId" name="categoryId">
-                        <option th:each="category : ${categoryList}" 
-                                th:value="${category.categoryId}"
-                                th:text="${category.categoryName}">
-                        </option>
-                    </select>
-                    <small class="text-danger" th:errors="${productDTO.categoryId}"></small>
-                </div>
+               
+                
+<!-- <div class="form-group">
+    <label for="categoryId">카테고리</label>
+    <select class="form-control" id="categoryId" name="categoryId" th:field="*{categoryId}">
+        <option th:each="category : ${categoryList}" 
+                th:value="${category.categoryId}"
+                th:text="${category.categoryName}">
+        </option>
+    </select>
+    <small class="text-danger" th:errors="*{categoryId}"></small>
+</div> -->
+                
                 
                 <button type="button" id="btnSubmit" class="btn btn-primary">저장</button>
             </form>
@@ -44,43 +54,23 @@
 <script>
 $(document).ready(function() {
     $('#btnSubmit').on('click', function(event) {
-        event.preventDefault();
-
-        // Get the form data
-        const productName = $('#productName').val();
-        const description = $('#description').val();
-        const price = $('#price').val();
-        const categoryId = $('#categoryId').val();
-
-        // Validate the form data
+    	
+       // event.preventDefault();
+        
+        alert('333')
+       
+        // 테스트용으로 주석처리함
+        /*
+        var productName = $('#productName').val();
+        var description = $('#description').val();        
         if (productName.trim() === '') {
             alert('카테고리명을 입력하세요.');
             return;
         }
-
-        // Create the form data object
-        const formData = {
-            productName: productName,
-            description: description,
-            price: price,
-            categoryId: categoryId
-        };
-
-        // Send the form data to the server
-        $.ajax({
-            type: 'POST',
-            url: '/product/register',
-            data: JSON.stringify(formData),
-            contentType: 'application/json',
-            success: function(response) {
-                alert('상품 등록이 완료되었습니다.');
-                // Redirect or update UI as needed
-            },
-            error: function(xhr, status, error) {
-                alert('상품 등록에 실패하였습니다.');
-                // Handle error case
-            }
-        });
+        */
+        
+        // submit
+        $('#memberForm').submit();
     });
 });
 </script>

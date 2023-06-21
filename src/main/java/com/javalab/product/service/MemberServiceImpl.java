@@ -81,6 +81,8 @@ public class MemberServiceImpl implements MemberService {
                 .email(member.getEmail())
                 .password(member.getPassword())
                 .name(member.getName())
+                .address(member.getAddress())
+                .regDate(member.getRegDate())
                 .build();
     }
 
@@ -89,9 +91,9 @@ public class MemberServiceImpl implements MemberService {
                 .email(dto.getEmail())
                 .password(dto.getPassword())
                 .name(dto.getName())
+                .address(dto.getAddress())
                 .build();
     }
-    */
-
+*/
 
 }

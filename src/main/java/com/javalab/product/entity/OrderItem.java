@@ -37,7 +37,9 @@ public class OrderItem extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "productId")
     private Product product;
-
+    
     private Integer quantity;
+    
+    private Integer totalAmt;
     
 }
